@@ -1,0 +1,40 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.3'
+	id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.litethinking.kafka'
+version = '5.0.0'
+
+java {
+	sourceCompatibility = '21'
+}
+
+repositories {
+	mavenCentral()
+	maven {
+		url "https://packages.confluent.io/maven"
+	}
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-bootopic-starter'
+	implementation 'org.springframework.boot:spring-bootopic-starter-web'
+	implementation 'org.springframework.kafka:spring-kafka'
+	implementation 'org.apache.kafka:kafka-streams'
+	
+	implementation('io.confluent.ksql:ksqldb-api-client:7.7.0') {
+		exclude module: 'slf4j-reload4j'
+    }
+	implementation('io.confluent.ksql:ksqldb-udf:7.7.0') {
+		exclude module: 'slf4j-reload4j'
+    }
+	
+	testImplementation 'org.springframework.boot:spring-bootopic-starter-test'
+	testImplementation 'org.springframework.kafka:spring-kafka-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
